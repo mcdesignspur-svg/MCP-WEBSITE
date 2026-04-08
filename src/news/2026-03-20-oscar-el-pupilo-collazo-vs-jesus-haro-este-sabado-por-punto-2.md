@@ -7,7 +7,7 @@ author: "Miguel Cotto Promotions"
 image: "/assets/news/1774048043721-upload.png"
 image_focus: "50% 16%"
 category: "Announcement"
-featured: true
+featured: false
 excerpt: "LA SÉPTIMA DEFENSA SE PODRÁ VER DESDE LAS 8:00PM EN TODO PUERTO RICO"
 gallery:
   []
