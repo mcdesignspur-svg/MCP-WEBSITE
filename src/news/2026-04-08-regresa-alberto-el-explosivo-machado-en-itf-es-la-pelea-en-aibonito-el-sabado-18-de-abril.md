@@ -7,11 +7,10 @@ author: "Miguel Cotto Promotions"
 image: "/assets/news/1775668059253-upload.jpg"
 image_focus: "50% 29%"
 category: "Announcement"
-featured: true
+featured: false
 excerpt: "Arden los combates de 'Piru' Guzmán vs. Sebastía Cargua y 'La Revancha' de Belisa López De Jesús y Génesis López"
 gallery:
-  - "/assets/news/1775668098593-gallery-t3kn1.jpg"
-  - "/assets/news/1775668106182-gallery-8rxqo.jpg"
+  []
 ---
 **(8 de abril de 2026 - Caguas, Puerto Rico)** – El ex-campeón mundial AMB **Alberto “El Explosivo” Machado **regresa al ring en **iTF… Es La Pelea**, que se celebrará el sábado 18 de abril en el legendario Coliseo José “Marrón” Aponte de Aibonito. Tras un tiempo alejado del ensogado pero no del gimnasio y consolidándose como empresario con el Laboratorio Clínico Antillanos en Carolina junto a su esposa, Machado vuelve con la mirada puesta en una nueva oportunidad por el campeonato mundial.
 
