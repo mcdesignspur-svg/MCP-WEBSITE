@@ -7,23 +7,10 @@ author: "Miguel Cotto Promotions"
 image: "/assets/news/1776274005119-upload.jpg"
 image_focus: "49% 33%"
 category: "Press Release"
-featured: true
+featured: false
 excerpt: "Crece la tensión entre Belisa López De Jesús y Génesis López"
 gallery:
-  - "/assets/news/1776274071685-gallery-yqv9j.jpg"
-  - "/assets/news/1776274073367-gallery-52pkd.jpg"
-  - "/assets/news/1776274074956-gallery-48uu7.jpg"
-  - "/assets/news/1776274076332-gallery-cwonb.jpg"
-  - "/assets/news/1776274077742-gallery-qe3no.jpg"
-  - "/assets/news/1776274079579-gallery-3yrou.jpg"
-  - "/assets/news/1776274080876-gallery-5fn61.jpg"
-  - "/assets/news/1776274082366-gallery-o5g0m.jpg"
-  - "/assets/news/1776274083605-gallery-24eh7.jpg"
-  - "/assets/news/1776274085144-gallery-k14u4.jpg"
-  - "/assets/news/1776274086634-gallery-36tdj.jpg"
-  - "/assets/news/1776274087834-gallery-wgfgp.jpg"
-  - "/assets/news/1776274089140-gallery-womyr.jpg"
-  - "/assets/news/1776274090332-gallery-m0ooe.jpg"
+  []
 ---
 **(14 de abril de 2026 - Aibonito, Puerto Rico)** – Hoy, en el Teatro Encanto de Aibonito, Miguel Cotto Promotions y H2 Entertainment presentaron oficialmente la segunda edición de iTF… Es La Pelea, que se celebrará el sábado 18 de abril en el Coliseo José Marrón Aponte. El cuál se transmitirá en a partir de las 9:00pm por el canal de YouTube de Miguel Cotto Promotions y simultáneamente por el Facebook de Telemundo Puerto Rico. "Tenemos un evento de nivel mundial, donde veremos los mejores prospectos en grandes pruebas. Cada combate de este sábado están bien parejos, cualquier cosa puede pasar. Tenemos 3 combates por la medalla del WBO World Class Prospects, los cuales están calientes pues son retos reales donde cada peleador tiene que trabajar duro por la victoria, lleguen temprano a la Marrón Aponte en Aibonito para que vean el futuro del boxeo puertorriqueño", dijo Héctor Soto, presidente y promotor de Miguel Cotto Promotions y H2 Entertainment.
 
