@@ -998,6 +998,39 @@
     }
     .ev-row.open .ev-chevron { transform: rotate(180deg); }
 
+    .ev-reorder {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+    .ev-reorder button {
+      width: 26px;
+      height: 22px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: all 0.15s;
+    }
+    .ev-reorder button:hover:not(:disabled) {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .ev-reorder button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .ev-reorder .material-symbols-outlined {
+      font-size: 1rem;
+    }
+
     .ev-form {
       display: none;
       padding: 1.25rem;
@@ -1918,11 +1951,13 @@
       return;
     }
 
-    container.innerHTML = evState.events.map(ev => {
+    container.innerHTML = evState.events.map((ev, idx) => {
       const isOpen = evState.openId === ev.id;
       const isMain = !!ev.is_main;
       const isNew = !!ev._new;
       const focusStr = ev.image_focus || '50% 50%';
+      const isFirst = idx === 0;
+      const isLast = idx === evState.events.length - 1;
 
       const previewSrc = evPreview[ev.id] || ev.image;
       const thumbHtml = previewSrc
@@ -1941,6 +1976,10 @@
               <div class="ev-summary-meta">${evEscape(summaryMeta)}${isNew ? ' · <span>nuevo, sin guardar</span>' : ''}</div>
             </div>
             ${isMain ? '<span class="ev-main-badge">⭐ Principal</span>' : ''}
+            <div class="ev-reorder" onclick="event.stopPropagation()">
+              <button onclick="evMove('${ev.id}',-1)" ${isFirst ? 'disabled' : ''} title="Mover arriba"><span class="material-symbols-outlined">keyboard_arrow_up</span></button>
+              <button onclick="evMove('${ev.id}',1)" ${isLast ? 'disabled' : ''} title="Mover abajo"><span class="material-symbols-outlined">keyboard_arrow_down</span></button>
+            </div>
             <span class="material-symbols-outlined ev-chevron">expand_more</span>
           </div>
 
@@ -2046,6 +2085,17 @@
       const row = document.querySelector(`.ev-row[data-id="${ev.id}"]`);
       if (row) row.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 50);
+  }
+
+  function evMove(id, delta) {
+    const idx = evState.events.findIndex(e => e.id === id);
+    if (idx < 0) return;
+    const target = idx + delta;
+    if (target < 0 || target >= evState.events.length) return;
+    const [item] = evState.events.splice(idx, 1);
+    evState.events.splice(target, 0, item);
+    evRender();
+    evCommit('↕️ Orden actualizado');
   }
 
   function evToggleMain(id) {
