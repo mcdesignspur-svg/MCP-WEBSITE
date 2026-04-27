@@ -10,41 +10,56 @@ title: "Upcoming Events | Miguel Cotto Promotions"
 <h3 class="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">Upcoming Events</h3>
 </div>
 </div>
-<div class="flex justify-center">
-{% if event.title %}
-<div class="w-full max-w-5xl group relative overflow-hidden rounded-xl bg-surface border border-border-muted flex flex-col md:flex-row h-full shadow-2xl">
-<div class="w-full md:w-1/2 overflow-hidden h-64 md:h-auto">
-<img class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105" src="{{ event.image }}" style="object-position: {{ event.image_focus | default('center') }};"/>
+{% if events.length %}
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+{% for ev in events %}
+{% if ev.title %}
+<div class="group relative overflow-hidden rounded-xl bg-surface border {% if ev.is_main %}border-primary shadow-[0_0_30px_rgba(215,35,35,0.15)]{% else %}border-border-muted{% endif %} flex flex-col md:flex-row h-full shadow-2xl">
+<div class="w-full md:w-2/5 overflow-hidden h-56 md:h-auto">
+<img class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105" src="{{ ev.image }}" style="object-position: {{ ev.image_focus | default('center') }};"/>
 </div>
-<div class="p-8 flex flex-col justify-between flex-1">
+<div class="p-6 flex flex-col justify-between flex-1">
 <div>
-<div class="flex items-center gap-2 mb-4">
+<div class="flex items-center gap-2 mb-3">
 <span class="material-symbols-outlined text-primary">calendar_today</span>
-<span class="text-slate-400 font-bold uppercase tracking-widest text-xs">{{ event.date_display }}</span>
+<span class="text-slate-400 font-bold uppercase tracking-widest text-xs">{{ ev.date_display }}</span>
 </div>
-<h4 class="text-3xl font-black text-white uppercase leading-tight mb-4">{{ event.title | safe | nl2br }}</h4>
-<p class="text-slate-400 text-sm mb-6 leading-relaxed">Witness the raw intensity of professional boxing at its finest. An unforgettable night of professional boxing displaying the next generation of champions.</p>
-<div class="flex items-center gap-4 text-xs font-bold text-slate-300">
-<span class="bg-primary/20 text-primary px-3 py-1 rounded">MAIN EVENT</span>
+<h4 class="text-2xl font-black text-white uppercase leading-tight mb-3">{{ ev.title | safe | nl2br }}</h4>
+<p class="text-slate-400 text-sm mb-4 leading-relaxed">Witness the raw intensity of professional boxing at its finest. An unforgettable night displaying the next generation of champions.</p>
+{% if ev.is_main %}
+<div class="flex items-center gap-2 text-xs font-bold text-slate-300">
+<span class="bg-primary text-white px-3 py-1 rounded">⭐ MAIN EVENT</span>
 </div>
+{% endif %}
 </div>
-<div class="mt-8 flex items-center justify-between border-t border-border-muted pt-6">
+<div class="mt-6 flex items-center justify-between border-t border-border-muted pt-4">
 <div class="flex flex-col">
 <span class="text-[10px] text-slate-500 uppercase tracking-widest">Venue</span>
-<span class="text-white font-bold">{{ event.location }}</span>
+<span class="text-white font-bold text-sm">{{ ev.location }}</span>
 </div>
-<button class="bg-primary text-white text-xs font-bold px-6 py-3 rounded-lg uppercase tracking-widest hover:bg-red-700" onclick="window.open('{{ event.ticket_link }}')">Get Tickets</button>
+<div class="flex gap-2">
+{% if ev.watch_link %}
+<button class="bg-black/40 border border-white/15 text-white text-xs font-bold px-4 py-2.5 rounded-lg uppercase tracking-widest hover:bg-black/60" onclick="window.open('{{ ev.watch_link }}', '_blank')">Watch</button>
+{% endif %}
+{% if ev.ticket_link %}
+<button class="bg-primary text-white text-xs font-bold px-5 py-2.5 rounded-lg uppercase tracking-widest hover:bg-red-700" onclick="window.open('{{ ev.ticket_link }}', '_blank')">Get Tickets</button>
+{% endif %}
 </div>
 </div>
+</div>
+</div>
+{% endif %}
+{% endfor %}
 </div>
 {% else %}
+<div class="flex justify-center">
 <div class="text-center py-20 px-6 border-2 border-dashed border-border-muted rounded-2xl max-w-2xl w-full">
     <span class="material-symbols-outlined text-6xl text-slate-600 mb-6">event_busy</span>
     <h4 class="text-2xl font-bold text-white uppercase mb-4 tracking-tight">No Events Currently Scheduled</h4>
     <p class="text-slate-400 font-light mb-8">We are actively preparing the next major fight night. Check back soon for announcements!</p>
     <button class="bg-primary/10 border border-primary text-primary px-8 py-3 rounded uppercase text-xs font-bold tracking-widest hover:bg-primary hover:text-white transition-all" onclick="window.location.href='/news.html'">Stay Updated</button>
 </div>
-{% endif %}
 </div>
+{% endif %}
 </div>
 </section>

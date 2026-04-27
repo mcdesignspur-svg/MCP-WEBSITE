@@ -1,5 +1,12 @@
 /**
- * MCP Admin API - Get or update next event data in GitHub
+ * MCP Admin API - Get or update the events list in GitHub
+ *
+ * Storage: src/_data/events.json (array of events).
+ * Each event: { id, title, date_display, location, image, image_focus, ticket_link, watch_link, is_main }
+ *
+ * GET  -> returns the full array
+ * POST -> body { events: [...] } replaces the entire list (atomic)
+ *         The server enforces that at most ONE event has is_main=true.
  */
 
 const https = require("https");
@@ -8,7 +15,7 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const REPO = "mcottojr-design/MCP-WEBSITE";
 const BRANCH = "main";
-const FILE_PATH = "src/_data/event.json";
+const FILE_PATH = "src/_data/events.json";
 
 function githubRequest(method, path, body) {
   return new Promise((resolve, reject) => {
@@ -39,6 +46,32 @@ function githubRequest(method, path, body) {
   });
 }
 
+function sanitizeEvent(e) {
+  return {
+    id: String(e.id || `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`),
+    title: String(e.title || ""),
+    date_display: String(e.date_display || ""),
+    location: String(e.location || ""),
+    image: String(e.image || ""),
+    image_focus: String(e.image_focus || ""),
+    ticket_link: String(e.ticket_link || ""),
+    watch_link: String(e.watch_link || ""),
+    is_main: !!e.is_main,
+  };
+}
+
+function normalizeList(arr) {
+  if (!Array.isArray(arr)) return [];
+  const cleaned = arr.map(sanitizeEvent);
+  // Enforce only one main event — first wins.
+  let mainSeen = false;
+  for (const ev of cleaned) {
+    if (ev.is_main && !mainSeen) { mainSeen = true; }
+    else { ev.is_main = false; }
+  }
+  return cleaned;
+}
+
 module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
@@ -51,8 +84,11 @@ module.exports = async function handler(req, res) {
       const result = await githubRequest("GET", `/repos/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`);
       if (result.status === 200) {
         const content = Buffer.from(result.body.content, "base64").toString();
-        return res.status(200).json(JSON.parse(content));
+        const parsed = JSON.parse(content);
+        const list = Array.isArray(parsed) ? parsed : [];
+        return res.status(200).json({ events: list });
       }
+      if (result.status === 404) return res.status(200).json({ events: [] });
       return res.status(result.status).json({ error: "File not found", details: result.body });
     } catch (err) {
       return res.status(500).json({ error: err.message });
@@ -65,19 +101,17 @@ module.exports = async function handler(req, res) {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
-    const { title, date_display, location, image, image_focus, ticket_link, watch_link } = req.body;
-    const eventData = { title, date_display, location, image, image_focus, ticket_link, watch_link };
-    const content = JSON.stringify(eventData, null, 2);
+    const events = normalizeList(req.body && req.body.events);
+    const content = JSON.stringify(events, null, 2) + "\n";
     const encoded = Buffer.from(content).toString("base64");
 
     try {
-      // Get current SHA
       let sha;
       const existing = await githubRequest("GET", `/repos/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`);
       if (existing.status === 200) sha = existing.body.sha;
 
       const commitBody = {
-        message: "Update next event via admin dashboard",
+        message: "Update events list via admin dashboard",
         content: encoded,
         branch: BRANCH,
         ...(sha && { sha }),
@@ -85,7 +119,7 @@ module.exports = async function handler(req, res) {
 
       const result = await githubRequest("PUT", `/repos/${REPO}/contents/${FILE_PATH}`, commitBody);
       if (result.status === 200 || result.status === 201) {
-        return res.status(200).json({ success: true, message: "Event updated!" });
+        return res.status(200).json({ success: true, events });
       }
       return res.status(500).json({ error: "GitHub update failed", details: result.body });
     } catch (err) {

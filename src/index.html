@@ -23,32 +23,46 @@ extra_css: |
   {% set featured = collections.post | reverse | first %}
 {% endif %}
 
+{% set mainEvent = null %}
+{% for ev in events %}
+  {% if not mainEvent and ev.is_main %}
+    {% set mainEvent = ev %}
+  {% endif %}
+{% endfor %}
+{% if not mainEvent and events.length %}
+  {% set mainEvent = events[0] %}
+{% endif %}
+
 <!-- Hero Section -->
 <section class="relative w-full h-[80vh] md:min-h-screen max-h-[900px] bg-black overflow-hidden">
   <div class="hero-carousel" id="hero-carousel">
-    
-    {% if event.title %}
-    <!-- Slide 1: Upcoming Event -->
+
+    {% if mainEvent and mainEvent.title %}
+    <!-- Slide 1: Main Event -->
     <div class="hero-slide active" data-slide="0">
-      <img src="{{ event.image }}" alt="{{ event.title }}" class="absolute inset-0 w-full h-full object-cover" style="object-position: {{ event.image_focus | default('center') }};">
+      <img src="{{ mainEvent.image }}" alt="{{ mainEvent.title }}" class="absolute inset-0 w-full h-full object-cover" style="object-position: {{ mainEvent.image_focus | default('center') }};">
       <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none"></div>
       <div class="absolute bottom-0 left-0 w-full z-20 p-4 md:p-12 lg:p-20">
         <div class="max-w-4xl space-y-2 md:space-y-4">
           <div class="inline-block bg-primary px-3 py-1 text-white text-[10px] md:text-xs font-bold uppercase tracking-widest rounded-sm mb-2">Main Event</div>
           <h1 class="text-white text-3xl md:text-6xl font-black leading-tight tracking-tight uppercase italic drop-shadow-md">
-            {{ event.title | safe | nl2br }}
+            {{ mainEvent.title | safe | nl2br }}
           </h1>
           <div class="flex flex-col md:flex-row flex-wrap gap-2 md:gap-6 text-slate-200 text-sm md:text-xl font-medium mt-2">
-            <span class="flex items-center gap-2 drop-shadow-md"><span class="material-symbols-outlined text-primary">calendar_today</span> {{ event.date_display }}</span>
-            <span class="flex items-center gap-2 drop-shadow-md"><span class="material-symbols-outlined text-primary">location_on</span> {{ event.location }}</span>
+            <span class="flex items-center gap-2 drop-shadow-md"><span class="material-symbols-outlined text-primary">calendar_today</span> {{ mainEvent.date_display }}</span>
+            <span class="flex items-center gap-2 drop-shadow-md"><span class="material-symbols-outlined text-primary">location_on</span> {{ mainEvent.location }}</span>
           </div>
           <div class="pt-6 flex flex-wrap gap-4">
-            <button class="bg-primary hover:bg-red-700 text-white font-black py-3 md:py-4 px-8 md:px-10 rounded-lg flex items-center gap-2 transition-all uppercase tracking-widest text-sm md:text-base shadow-2xl" onclick="window.open('{{ event.ticket_link }}', '_blank')">
+            {% if mainEvent.ticket_link %}
+            <button class="bg-primary hover:bg-red-700 text-white font-black py-3 md:py-4 px-8 md:px-10 rounded-lg flex items-center gap-2 transition-all uppercase tracking-widest text-sm md:text-base shadow-2xl" onclick="window.open('{{ mainEvent.ticket_link }}', '_blank')">
               Buy Tickets <span class="material-symbols-outlined">confirmation_number</span>
             </button>
-            <button class="bg-black/60 hover:bg-black/80 backdrop-blur-md text-white font-black py-3 md:py-4 px-8 md:px-10 rounded-lg border border-white/20 transition-all uppercase tracking-widest text-sm md:text-base shadow-xl" onclick="window.open('{{ event.watch_link }}', '_blank')">
+            {% endif %}
+            {% if mainEvent.watch_link %}
+            <button class="bg-black/60 hover:bg-black/80 backdrop-blur-md text-white font-black py-3 md:py-4 px-8 md:px-10 rounded-lg border border-white/20 transition-all uppercase tracking-widest text-sm md:text-base shadow-xl" onclick="window.open('{{ mainEvent.watch_link }}', '_blank')">
               Watch Live <span class="material-symbols-outlined">smart_display</span>
             </button>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -79,7 +93,7 @@ extra_css: |
 
     <!-- Carousel Nav -->
     <div class="absolute bottom-10 right-10 z-30 flex gap-3">
-      {% if event.title %}
+      {% if mainEvent and mainEvent.title %}
         <button onclick="setSlide(0)" class="w-3 h-3 rounded-full bg-white/30 hover:bg-white transition-all hero-dot active" id="dot-0"></button>
         <button onclick="setSlide(1)" class="w-3 h-3 rounded-full bg-white/30 hover:bg-white transition-all hero-dot" id="dot-1"></button>
       {% endif %}
@@ -88,7 +102,7 @@ extra_css: |
 </section>
 
 <!-- Upcoming Events -->
-{% if event.title %}
+{% if events.length %}
 <section class="py-24 bg-background-dark">
 <div class="max-w-7xl mx-auto px-6 md:px-12">
 <div class="flex items-end justify-between mb-12">
@@ -98,55 +112,62 @@ extra_css: |
 </div>
 <a class="hidden md:block text-slate-400 hover:text-white transition-colors uppercase text-sm font-bold tracking-widest border-b border-primary pb-1" href="/events.html">View Full Calendar</a>
 </div>
-<div class="flex justify-center">
-<div class="w-full max-w-5xl group relative overflow-hidden rounded-xl bg-surface border border-border-muted flex flex-col md:flex-row h-full shadow-2xl">
-<div class="w-full md:w-1/2 overflow-hidden h-64 md:h-auto">
-<img class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105" src="{{ event.image }}" style="object-position: {{ event.image_focus | default('center') }};"/>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+{% for ev in events %}
+{% if ev.title %}
+<div class="group relative overflow-hidden rounded-xl bg-surface border {% if ev.is_main %}border-primary shadow-[0_0_30px_rgba(215,35,35,0.15)]{% else %}border-border-muted{% endif %} flex flex-col md:flex-row h-full shadow-2xl">
+<div class="w-full md:w-2/5 overflow-hidden h-56 md:h-auto">
+<img class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105" src="{{ ev.image }}" style="object-position: {{ ev.image_focus | default('center') }};"/>
 </div>
-<div class="p-8 flex flex-col justify-between flex-1">
+<div class="p-6 flex flex-col justify-between flex-1">
 <div>
-<div class="flex items-center gap-2 mb-4">
+<div class="flex items-center gap-2 mb-3">
 <span class="material-symbols-outlined text-primary">calendar_today</span>
-<span class="text-slate-400 font-bold uppercase tracking-widest text-xs">{{ event.date_display }}</span>
+<span class="text-slate-400 font-bold uppercase tracking-widest text-xs">{{ ev.date_display }}</span>
 </div>
-<h4 class="text-3xl font-black text-white uppercase leading-tight mb-4">{{ event.title | safe | nl2br }}</h4>
-<p class="text-slate-400 text-sm mb-6 leading-relaxed">Witness the raw intensity of professional boxing from the island's hottest upcoming talents. An unforgettable night of fighting displaying the next generation of champions.</p>
-<div class="flex items-center gap-4 text-xs font-bold text-slate-300">
-<span class="bg-primary/20 text-primary px-3 py-1 rounded">MAIN EVENT</span>
+<h4 class="text-2xl font-black text-white uppercase leading-tight mb-3">{{ ev.title | safe | nl2br }}</h4>
+{% if ev.is_main %}
+<div class="flex items-center gap-2 text-xs font-bold text-slate-300 mb-2">
+<span class="bg-primary text-white px-3 py-1 rounded">⭐ MAIN EVENT</span>
 </div>
+{% endif %}
 </div>
-<div class="mt-8 flex items-center justify-between border-t border-border-muted pt-6">
+<div class="mt-6 flex items-center justify-between border-t border-border-muted pt-4">
 <div class="flex flex-col">
 <span class="text-[10px] text-slate-500 uppercase tracking-widest">Venue</span>
-<span class="text-white font-bold">{{ event.location }}</span>
+<span class="text-white font-bold text-sm">{{ ev.location }}</span>
 </div>
-<button class="bg-primary text-white text-xs font-bold px-6 py-3 rounded-lg uppercase tracking-widest hover:bg-red-700" onclick="window.open('{{ event.ticket_link }}')">Get Tickets</button>
+{% if ev.ticket_link %}
+<button class="bg-primary text-white text-xs font-bold px-5 py-2.5 rounded-lg uppercase tracking-widest hover:bg-red-700" onclick="window.open('{{ ev.ticket_link }}')">Get Tickets</button>
+{% endif %}
 </div>
 </div>
 </div>
+{% endif %}
+{% endfor %}
 </div>
 </div>
 </section>
 {% endif %}
 
 <!-- Live Stream Section -->
-{% if event.youtube_live_id %}
+{% if mainEvent and mainEvent.youtube_live_id %}
 <section class="py-24 bg-black border-y border-primary/20 relative overflow-hidden">
   <div class="absolute inset-0 bg-primary/5"></div>
   <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
     <div class="flex flex-col items-center justify-center text-center mb-10">
-      {% if event.youtube_is_live %}
+      {% if mainEvent.youtube_is_live %}
       <div class="flex items-center gap-3 mb-4 bg-red-600/10 px-4 py-2 rounded-full border border-red-600/20">
         <span class="w-2.5 h-2.5 bg-red-600 rounded-full animate-pulse shadow-[0_0_10px_rgba(220,38,38,1)]"></span>
         <span class="text-red-500 font-bold uppercase tracking-[0.3em] text-[10px]">Live Now</span>
       </div>
       {% endif %}
-      <h3 class="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">{{ event.youtube_live_title | default(event.title) }} - Live Stream</h3>
+      <h3 class="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">{{ mainEvent.youtube_live_title | default(mainEvent.title) }} - Live Stream</h3>
       <p class="text-slate-400 max-w-2xl mx-auto">Watch the action unfold live. Don't miss a second of Fight Night.</p>
     </div>
-    
+
     <div class="w-full max-w-5xl mx-auto rounded-2xl overflow-hidden border border-primary/30 shadow-[0_0_60px_rgba(215,35,35,0.15)] aspect-video bg-black relative">
-      <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/{{ event.youtube_live_id }}" title="YouTube Live Stream" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/{{ mainEvent.youtube_live_id }}" title="YouTube Live Stream" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
   </div>
 </section>

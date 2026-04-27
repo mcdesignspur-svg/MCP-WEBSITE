@@ -893,6 +893,195 @@
 
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
     }
+
+    /* ===== EVENT LIST ===== */
+    .ev-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .ev-toolbar p {
+      color: var(--muted);
+      font-size: 0.85rem;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .ev-empty {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--muted);
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+    }
+    .ev-empty span { font-size: 2.5rem; display: block; margin-bottom: 1rem; }
+
+    .ev-row {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .ev-row.is-main { border-color: var(--primary); box-shadow: 0 0 18px rgba(215,35,35,0.15); }
+    .ev-row.is-new { border-color: var(--warning); }
+
+    .ev-summary {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .ev-summary:hover { background: var(--surface2); }
+
+    .ev-thumb {
+      width: 84px;
+      height: 56px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: var(--surface2);
+      flex-shrink: 0;
+    }
+    .ev-thumb-empty {
+      width: 84px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--surface2), #200c0c);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .ev-summary-text { flex: 1; min-width: 0; }
+    .ev-summary-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .ev-summary-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .ev-summary-meta span { color: var(--primary); }
+
+    .ev-main-badge {
+      background: var(--primary);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    .ev-chevron {
+      color: var(--muted);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .ev-row.open .ev-chevron { transform: rotate(180deg); }
+
+    .ev-form {
+      display: none;
+      padding: 1.25rem;
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .ev-row.open .ev-form { display: block; }
+
+    .ev-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .ev-actions .btn-publish {
+      flex: 1;
+      min-width: 120px;
+      padding: 0.7rem 1rem;
+      font-size: 0.78rem;
+    }
+
+    .ev-toggle-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 0.9rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      flex: 1;
+      min-width: 160px;
+      justify-content: center;
+    }
+    .ev-toggle-main:hover { border-color: var(--primary); }
+    .ev-toggle-main.on {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+    .ev-toggle-main .toggle-track {
+      width: 32px;
+      height: 18px;
+      border-radius: 9px;
+      background: var(--border);
+      position: relative;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .ev-toggle-main.on .toggle-track { background: rgba(255,255,255,0.4); }
+    .ev-toggle-main .toggle-knob {
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--muted);
+      transition: left 0.2s, background 0.2s;
+    }
+    .ev-toggle-main.on .toggle-knob { left: 16px; background: white; }
+
+    .btn-delete-event {
+      padding: 0.7rem 1rem;
+      background: transparent;
+      color: #ff4444;
+      border: 1px solid #4a1f1f;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex: 0 0 auto;
+    }
+    .btn-delete-event:hover { background: rgba(215,35,35,0.1); border-color: var(--primary); }
   </style>
 </head>
 <body>
@@ -919,7 +1108,7 @@
       <div class="tab-switcher">
         <button class="tab-btn active" id="tab-editor" onclick="switchTab('editor')">✏️ <span class="tab-label">Editor</span></button>
         <button class="tab-btn" id="tab-posts" onclick="switchTab('posts')">📋 <span class="tab-label">All Posts</span></button>
-        <button class="tab-btn" id="tab-event" onclick="switchTab('event')">🥊 <span class="tab-label">Next Event</span></button>
+        <button class="tab-btn" id="tab-event" onclick="switchTab('event')">🥊 <span class="tab-label">Events</span></button>
       </div>
     </div>
     <div class="topbar-right">
@@ -1039,88 +1228,15 @@
     </main>
 
     <main class="editor-panel" id="event-panel" style="display:none">
-      <div class="section-label">1. Live View (Current Homepage Content)</div>
-      
-      <div id="event-preview-container" style="margin-bottom: 2.5rem; display: flex; justify-content: center; background: rgba(0,0,0,0.2); padding: 2rem; border-radius: 1rem; border: 1px solid var(--border-muted);">
-        <div id="event-live-card" class="post-card featured" style="margin:0; cursor:default; width: 100%; max-width: 440px; position: relative;">
-          <!-- Quick Delete -->
-          <button title="Stop hosting this event" onclick="deleteEvent()" style="position: absolute; top: 1rem; right: 1rem; z-index: 30; background: #d72323; width: 2.5rem; height: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-            <span class="material-symbols-outlined" style="font-size: 1.25rem;">delete</span>
-          </button>
-          
-          <div class="card-image-wrap">
-            <img id="prev-ev-img" src="" alt="Live Banner" />
-            <span class="card-status live">🟢 Currently Hosting</span>
-            <span class="card-featured-label">⭐ Main Event</span>
-          </div>
-          <div class="card-body">
-            <div class="card-category" id="prev-ev-loc">Location</div>
-            <div class="card-title" id="prev-ev-title">Event Title</div>
-            <div class="card-footer">
-              <span class="card-date" id="prev-ev-date">Date</span>
-            </div>
-          </div>
-        </div>
+      <div class="section-label" style="margin-top:0">Eventos en Cartelera</div>
+
+      <div class="ev-toolbar">
+        <p>Anade, edita y borra eventos. Activa el toggle <strong>Principal</strong> en uno para destacarlo en el hero del home.</p>
+        <button class="btn-publish" onclick="evAddNew()" style="white-space: nowrap;">+ Anadir Evento</button>
       </div>
 
-      <div class="section-label">2. Event Headlines & Meta</div>
-      
-      <div class="field-group">
-        <label>Main Headline</label>
-        <input type="text" id="ev-title" placeholder="E.g. ITF ES LA PELEA: AIBONITO" />
-      </div>
-      
-      <div class="fields-row">
-        <div class="field-group">
-          <label>Schedule Display</label>
-          <input type="text" id="ev-date" placeholder="E.g. April 18th" />
-        </div>
-        <div class="field-group">
-          <label>Venue / Location</label>
-          <input type="text" id="ev-location" placeholder="E.g. Coliseo Marr\u00f3n Aponte" />
-        </div>
-      </div>
-
-      <div class="section-label">3. Banner Image</div>
-
-      <div class="image-upload-area" id="ev-upload-area" onclick="document.getElementById('ev-image-input').click()">
-        <input type="file" id="ev-image-input" accept="image/*" style="display:none;" />
-        <div class="upload-placeholder" id="ev-upload-placeholder">
-          <span>🖼️</span>
-          <p>Click to upload a new event banner</p>
-          <p style="font-size:0.75rem; margin-top:0.25rem;">JPG, PNG, WebP — Max 5MB</p>
-        </div>
-      </div>
-
-        <div class="image-card" id="ev-image-card">
-          <img class="image-thumb" id="ev-image-thumb" alt="Event Banner" />
-          <div class="image-card-info">
-            <p id="ev-image-filename" style="margin-bottom: 0.25rem; font-weight: 700;">banner.jpg</p>
-            <div class="focal-badge" id="ev-focal-badge" style="background: var(--primary); color: white;">🎯 Focus: Center (50% 50%)</div>
-          </div>
-          <div class="image-card-actions" style="display: flex; gap: 0.5rem;">
-            <button class="btn-focal" id="ev-open-focal-modal" style="flex: 1;">🎯 Set Focal Point</button>
-            <button class="btn-remove-img" id="ev-remove-image-btn" style="flex: 1;">✕ Remove</button>
-          </div>
-          <input type="hidden" id="ev-image-url" />
-        </div>
-
-      <div class="section-label">4. Conversion Links</div>
-
-      <div class="fields-row">
-        <div class="field-group">
-          <label>Ticket Sales URL</label>
-          <input type="text" id="ev-ticket" placeholder="https://..." />
-        </div>
-        <div class="field-group">
-          <label>Stream / Broadcast URL</label>
-          <input type="text" id="ev-watch" placeholder="https://youtube.com/..." />
-        </div>
-      </div>
-
-      <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-muted); display: flex; gap: 1rem;">
-        <button class="btn-publish" onclick="saveEvent()" id="ev-save-btn" style="flex: 3; height: 4rem; font-size: 1.1rem;">🚀 Update Homepage Event</button>
-        <button class="btn-publish" onclick="deleteEvent()" style="flex: 1; height: 4rem; font-size: 1.1rem; background: #333; color: #ff4444; border-color: #444;">🗑️ Clear Event</button>
+      <div id="ev-list-container">
+        <div class="cards-loading"><span>📥</span>Cargando eventos...</div>
       </div>
     </main>
 
@@ -1522,9 +1638,15 @@
     const cy = Math.max(0, Math.min(100, y));
     const pointStr = `${cx}% ${cy}%`;
     
-    if (focalContext === 'event') {
-      evFocalPoint = pointStr;
-      document.getElementById('ev-focal-badge').textContent = `🎯 Focus: ${pointStr}`;
+    if (focalContext === 'event' && focalEventId) {
+      const ev = (evState.events || []).find(e => e.id === focalEventId);
+      if (ev) {
+        ev.image_focus = pointStr;
+        const badge = document.querySelector(`[data-id="${focalEventId}"] .ev-focal-badge`);
+        if (badge) badge.textContent = `🎯 Focus: ${pointStr}`;
+        const thumb = document.querySelector(`[data-id="${focalEventId}"] .ev-thumb`);
+        if (thumb) thumb.style.objectPosition = pointStr;
+      }
     } else {
       focalPoint = pointStr;
       document.getElementById('focal-badge').textContent = `🎯 Focus: ${pointStr}`;
@@ -1734,54 +1856,226 @@
       .trim();
     return md;
   }
-  // ===== EVENT MANAGEMENT =====
-  let evUploadedPath = '';
-  let evFocalPoint = '50% 50%';
+  // ===== EVENT MANAGEMENT (multi-event) =====
   let focalContext = 'post'; // 'post' or 'event'
+  let focalEventId = null;
+  const evState = { events: [], openId: null };
 
-  async function loadEvent() {
+  function evNewId() {
+    return `ev-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+  }
+
+  function evBlank() {
+    return {
+      id: evNewId(),
+      title: '',
+      date_display: '',
+      location: '',
+      image: '',
+      image_focus: '50% 50%',
+      ticket_link: '',
+      watch_link: '',
+      is_main: false,
+      _new: true
+    };
+  }
+
+  function evEscape(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  async function evLoad() {
+    const container = document.getElementById('ev-list-container');
+    container.innerHTML = '<div class="cards-loading"><span>📥</span>Cargando eventos...</div>';
     try {
       const res = await fetch('/api/event');
       const data = await res.json();
-      if (data && !data.error && data.title) {
-        document.getElementById('ev-title').value = data.title || '';
-        document.getElementById('ev-date').value = data.date_display || '';
-        document.getElementById('ev-location').value = data.location || '';
-        evUploadedPath = data.image || '';
-        evFocalPoint = data.image_focus || '50% 50%';
-        document.getElementById('ev-image-url').value = evUploadedPath;
-        document.getElementById('ev-ticket').value = data.ticket_link || '';
-        document.getElementById('ev-watch').value = data.watch_link || '';
-        
-        if (evUploadedPath) {
-          document.getElementById('ev-upload-area').style.display = 'none';
-          document.getElementById('ev-image-card').classList.add('visible');
-          document.getElementById('ev-image-thumb').src = evUploadedPath;
-          document.getElementById('ev-image-filename').textContent = evUploadedPath.split('/').pop();
-          document.getElementById('ev-focal-badge').textContent = `🎯 Focus: ${evFocalPoint}`;
-        }
-        
-        updateEventPreview(data);
-      } else {
-        // Empty state
-        document.getElementById('event-live-card').style.opacity = '0.3';
-        document.getElementById('prev-ev-title').textContent = '(No Active Event)';
-      }
-    } catch (e) { console.error('Failed to load event data', e); }
+      const list = Array.isArray(data && data.events) ? data.events : [];
+      evState.events = list.map(e => ({ ...e, id: e.id || evNewId() }));
+    } catch (err) {
+      console.error('Failed to load events', err);
+      evState.events = [];
+    }
+    evRender();
   }
 
-  // Event Image Upload
-  document.getElementById('ev-image-input').addEventListener('change', async (e) => {
+  function evRender() {
+    const container = document.getElementById('ev-list-container');
+    if (!evState.events.length) {
+      container.innerHTML = `
+        <div class="ev-empty">
+          <span>🥊</span>
+          <p style="font-size:0.9rem; margin-bottom:0.5rem;"><strong>No hay eventos en cartelera todavia.</strong></p>
+          <p style="font-size:0.8rem;">Pulsa <strong>+ Anadir Evento</strong> arriba para crear el primero.</p>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = evState.events.map(ev => {
+      const isOpen = evState.openId === ev.id;
+      const isMain = !!ev.is_main;
+      const isNew = !!ev._new;
+      const focusStr = ev.image_focus || '50% 50%';
+
+      const thumbHtml = ev.image
+        ? `<img class="ev-thumb" src="${evEscape(ev.image)}" alt="" style="object-position:${evEscape(focusStr)}" />`
+        : `<div class="ev-thumb-empty">🥊</div>`;
+
+      const summaryTitle = ev.title || (isNew ? '(Nuevo evento sin titulo)' : '(Sin titulo)');
+      const summaryMeta = [ev.date_display, ev.location].filter(Boolean).join(' · ') || 'Sin fecha · Sin lugar';
+
+      return `
+        <div class="ev-row ${isOpen ? 'open' : ''} ${isMain ? 'is-main' : ''} ${isNew ? 'is-new' : ''}" data-id="${ev.id}">
+          <div class="ev-summary" onclick="evToggleOpen('${ev.id}')">
+            ${thumbHtml}
+            <div class="ev-summary-text">
+              <div class="ev-summary-title">${evEscape(summaryTitle)}</div>
+              <div class="ev-summary-meta">${evEscape(summaryMeta)}${isNew ? ' · <span>nuevo, sin guardar</span>' : ''}</div>
+            </div>
+            ${isMain ? '<span class="ev-main-badge">⭐ Principal</span>' : ''}
+            <span class="material-symbols-outlined ev-chevron">expand_more</span>
+          </div>
+
+          <div class="ev-form">
+            <div class="field-group">
+              <label>Titular Principal</label>
+              <input type="text" data-field="title" value="${evEscape(ev.title)}" placeholder="E.g. ITF ES LA PELEA: AIBONITO" oninput="evFieldChange('${ev.id}','title',this.value)" />
+            </div>
+
+            <div class="fields-row">
+              <div class="field-group">
+                <label>Fecha (display)</label>
+                <input type="text" data-field="date_display" value="${evEscape(ev.date_display)}" placeholder="E.g. April 18th" oninput="evFieldChange('${ev.id}','date_display',this.value)" />
+              </div>
+              <div class="field-group">
+                <label>Lugar / Venue</label>
+                <input type="text" data-field="location" value="${evEscape(ev.location)}" placeholder="E.g. Coliseo Marron Aponte" oninput="evFieldChange('${ev.id}','location',this.value)" />
+              </div>
+            </div>
+
+            <div class="section-label" style="margin-top:1rem">Banner</div>
+
+            <div class="image-upload-area" id="ev-upload-area-${ev.id}" onclick="document.getElementById('ev-image-input-${ev.id}').click()" style="${ev.image ? 'display:none;' : ''}">
+              <input type="file" id="ev-image-input-${ev.id}" accept="image/*" style="display:none;" onchange="evHandleImageUpload(event,'${ev.id}')" />
+              <div class="upload-placeholder">
+                <span>🖼️</span>
+                <p>Pulsa para subir un banner</p>
+                <p style="font-size:0.75rem; margin-top:0.25rem;">JPG, PNG, WebP — Max 5MB</p>
+              </div>
+            </div>
+
+            <div class="image-card ${ev.image ? 'visible' : ''}" id="ev-image-card-${ev.id}">
+              <img class="image-thumb" src="${evEscape(ev.image)}" alt="" />
+              <div class="image-card-info">
+                <p style="font-weight:700">${ev.image ? evEscape(ev.image.split('/').pop()) : ''}</p>
+                <div class="focal-badge ev-focal-badge" style="background:var(--primary);color:white">🎯 Focus: ${evEscape(focusStr)}</div>
+              </div>
+              <div class="image-card-actions" style="display:flex; gap:0.5rem;">
+                <button class="btn-focal" onclick="evOpenFocal('${ev.id}')" style="flex:1">🎯 Focal Point</button>
+                <button class="btn-remove-img" onclick="evRemoveImage('${ev.id}')" style="flex:1">✕ Remove</button>
+              </div>
+            </div>
+
+            <div class="section-label" style="margin-top:1rem">Links</div>
+
+            <div class="fields-row">
+              <div class="field-group">
+                <label>Tickets URL</label>
+                <input type="text" data-field="ticket_link" value="${evEscape(ev.ticket_link)}" placeholder="https://..." oninput="evFieldChange('${ev.id}','ticket_link',this.value)" />
+              </div>
+              <div class="field-group">
+                <label>Stream / Watch URL</label>
+                <input type="text" data-field="watch_link" value="${evEscape(ev.watch_link)}" placeholder="https://youtube.com/..." oninput="evFieldChange('${ev.id}','watch_link',this.value)" />
+              </div>
+            </div>
+
+            <div class="ev-actions">
+              <button class="ev-toggle-main ${isMain ? 'on' : ''}" onclick="evToggleMain('${ev.id}')" title="${isMain ? 'Es el evento principal del hero' : 'Convertir en evento principal del hero'}">
+                <span class="toggle-track"><span class="toggle-knob"></span></span>
+                <span>${isMain ? '⭐ Principal' : 'Hacer Principal'}</span>
+              </button>
+              <button class="btn-publish" onclick="evSave('${ev.id}')">💾 Guardar</button>
+              <button class="btn-delete-event" onclick="evDelete('${ev.id}')">🗑️ Borrar</button>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function evToggleOpen(id) {
+    evState.openId = (evState.openId === id) ? null : id;
+    evRender();
+  }
+
+  function evFieldChange(id, field, value) {
+    const ev = evState.events.find(e => e.id === id);
+    if (!ev) return;
+    ev[field] = value;
+    // Update summary live without full re-render
+    const row = document.querySelector(`.ev-row[data-id="${id}"]`);
+    if (row) {
+      if (field === 'title') {
+        const t = row.querySelector('.ev-summary-title');
+        if (t) t.textContent = value || '(Sin titulo)';
+      }
+      if (field === 'date_display' || field === 'location') {
+        const meta = row.querySelector('.ev-summary-meta');
+        if (meta) {
+          const summaryMeta = [ev.date_display, ev.location].filter(Boolean).join(' · ') || 'Sin fecha · Sin lugar';
+          meta.textContent = summaryMeta;
+        }
+      }
+    }
+  }
+
+  function evAddNew() {
+    const ev = evBlank();
+    if (!evState.events.length) ev.is_main = true; // first event auto-principal
+    evState.events.push(ev);
+    evState.openId = ev.id;
+    evRender();
+    setTimeout(() => {
+      const row = document.querySelector(`.ev-row[data-id="${ev.id}"]`);
+      if (row) row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 50);
+  }
+
+  function evToggleMain(id) {
+    const ev = evState.events.find(e => e.id === id);
+    if (!ev) return;
+    if (ev.is_main) {
+      ev.is_main = false;
+    } else {
+      evState.events.forEach(e => { e.is_main = false; });
+      ev.is_main = true;
+    }
+    evRender();
+    evCommit('⭐ Principal actualizado');
+  }
+
+  function evRemoveImage(id) {
+    const ev = evState.events.find(e => e.id === id);
+    if (!ev) return;
+    ev.image = '';
+    ev.image_focus = '50% 50%';
+    evRender();
+  }
+
+  async function evHandleImageUpload(e, id) {
     const file = e.target.files[0];
     if (!file) return;
-    showToast('Uploading event banner...', 'info');
+    if (file.size > 5 * 1024 * 1024) return showToast('Imagen muy grande. Max 5MB.', 'error');
+    showToast('Subiendo banner...', 'info');
 
     const reader = new FileReader();
     reader.onload = async (ev) => {
       const base64 = ev.target.result.split(',')[1];
       const ext = file.name.split('.').pop();
       const safeName = `${Date.now()}-event-banner.${ext}`;
-
       try {
         const res = await fetch('/api/upload', {
           method: 'POST',
@@ -1790,99 +2084,91 @@
         });
         const data = await res.json();
         if (data.success) {
-          evUploadedPath = data.path;
-          evFocalPoint = '50% 50%';
-          document.getElementById('ev-image-url').value = data.path;
-          document.getElementById('ev-upload-area').style.display = 'none';
-          document.getElementById('ev-image-thumb').src = ev.target.result;
-          document.getElementById('ev-image-filename').textContent = file.name;
-          document.getElementById('ev-image-card').classList.add('visible');
-          document.getElementById('ev-focal-badge').textContent = '🎯 Focus: Center (50% 50%)';
-          showToast('✅ Banner uploaded!', 'success');
+          const target = evState.events.find(x => x.id === id);
+          if (target) {
+            target.image = data.path;
+            target.image_focus = '50% 50%';
+          }
+          evRender();
+          showToast('✅ Banner subido', 'success');
+        } else {
+          showToast('Upload failed: ' + (data.error || 'Unknown'), 'error');
         }
-      } catch (err) { showToast('Upload failed', 'error'); }
+      } catch (err) { showToast('Error subiendo banner', 'error'); }
     };
     reader.readAsDataURL(file);
-  });
+  }
 
-  document.getElementById('ev-remove-image-btn').addEventListener('click', () => {
-    evUploadedPath = '';
-    document.getElementById('ev-image-url').value = '';
-    document.getElementById('ev-image-card').classList.remove('visible');
-    document.getElementById('ev-upload-area').style.display = 'flex';
-    document.getElementById('ev-image-input').value = '';
-  });
-
-  // Focal Point Integration for Event
-  document.getElementById('ev-open-focal-modal').addEventListener('click', () => {
+  function evOpenFocal(id) {
+    const ev = evState.events.find(e => e.id === id);
+    if (!ev || !ev.image) return;
     focalContext = 'event';
-    document.getElementById('modal-img').src = evUploadedPath;
-    const parts = evFocalPoint.split(' ');
+    focalEventId = id;
+    document.getElementById('modal-img').src = ev.image;
+    const parts = (ev.image_focus || '50% 50%').split(' ');
     updateModalDot(parseInt(parts[0]) || 50, parseInt(parts[1]) || 50);
     document.getElementById('focal-modal').classList.add('open');
     document.body.style.overflow = 'hidden';
-  });
-
-  // Modify the existing modal-overlay click to support context
-  document.getElementById('modal-overlay').removeEventListener('click', handleFocalClick); // We'll need to refactor
-  
-  // Actually, I'll just update my previous modal click logic to check context
-  // I'll do this in a separate chunk to be clean.
-  
-  function updateEventPreview(data) {
-    document.getElementById('event-live-card').style.opacity = '1';
-    document.getElementById('prev-ev-img').src = data.image || '/assets/hero_banner.jpg';
-    document.getElementById('prev-ev-img').style.objectPosition = data.image_focus || 'center';
-    document.getElementById('prev-ev-title').textContent = data.title || 'No Title';
-    document.getElementById('prev-ev-date').textContent = data.date_display || 'No Date';
-    document.getElementById('prev-ev-loc').textContent = data.location || 'No Location';
   }
 
-  async function saveEvent() {
-    const payload = {
-      title: document.getElementById('ev-title').value.trim(),
-      date_display: document.getElementById('ev-date').value.trim(),
-      location: document.getElementById('ev-location').value.trim(),
-      image: evUploadedPath,
-      image_focus: evFocalPoint,
-      ticket_link: document.getElementById('ev-ticket').value.trim(),
-      watch_link: document.getElementById('ev-watch').value.trim()
-    };
-    if (!payload.title && !payload.image) return deleteEvent();
-
-    const btn = document.getElementById('ev-save-btn');
-    btn.disabled = true; btn.textContent = 'Saving...';
+  async function evCommit(successMsg) {
     try {
       const res = await fetch('/api/event', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionToken}` },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({ events: evState.events.map(({ _new, ...rest }) => rest) })
       });
       const data = await res.json();
       if (data.success) {
-        showToast('✅ Homepage event updated!', 'success');
-        updateEventPreview(payload);
+        // Mark all as no longer new
+        evState.events.forEach(e => { delete e._new; });
+        if (Array.isArray(data.events)) {
+          // Sync with server (preserves server-normalized state)
+          const openId = evState.openId;
+          evState.events = data.events.map(e => ({ ...e }));
+          if (openId && !evState.events.find(e => e.id === openId)) {
+            evState.openId = null;
+          }
+        }
+        evRender();
+        if (successMsg) showToast(successMsg, 'success');
+        return true;
       }
-    } catch (e) { showToast('Error saving.', 'error'); }
-    btn.disabled = false; btn.textContent = '🚀 Update Homepage Event';
+      showToast('Error al guardar: ' + (data.error || 'Unknown'), 'error');
+      return false;
+    } catch (err) {
+      showToast('Network error al guardar', 'error');
+      return false;
+    }
   }
 
-  async function deleteEvent() {
-    if (!confirm('Are you sure you want to remove the current event from the homepage?')) return;
-    const empty = { title: "", date_display: "", location: "", image: "", image_focus: "", ticket_link: "", watch_link: "" };
-    try {
-      await fetch('/api/event', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionToken}` },
-        body: JSON.stringify(empty)
-      });
-      showToast('🗑️ Event removed. Homepage will only show featured news.', 'success');
-      location.reload();
-    } catch (e) { showToast('Failed to clear event.', 'error'); }
+  async function evSave(id) {
+    const ev = evState.events.find(e => e.id === id);
+    if (!ev) return;
+    if (!ev.title && !ev.image) {
+      showToast('Anade al menos un titulo o un banner antes de guardar.', 'error');
+      return;
+    }
+    await evCommit('✅ Evento guardado');
   }
 
-  // Initial load
-  loadEvent();
+  async function evDelete(id) {
+    const ev = evState.events.find(e => e.id === id);
+    if (!ev) return;
+    const label = ev.title || '(sin titulo)';
+    if (!confirm(`Borrar el evento "${label}"?`)) return;
+    evState.events = evState.events.filter(e => e.id !== id);
+    if (evState.openId === id) evState.openId = null;
+    // If we deleted the main and others remain, promote the first one
+    if (ev.is_main && evState.events.length && !evState.events.some(e => e.is_main)) {
+      evState.events[0].is_main = true;
+    }
+    evRender();
+    await evCommit('🗑️ Evento borrado');
+  }
+
+  // Load events when admin opens the events tab the first time (and on init)
+  evLoad();
 </script>
 </body>
 </html>
