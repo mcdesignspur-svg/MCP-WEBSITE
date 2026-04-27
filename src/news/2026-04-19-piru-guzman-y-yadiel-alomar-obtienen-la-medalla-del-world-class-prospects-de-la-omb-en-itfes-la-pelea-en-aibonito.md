@@ -7,20 +7,10 @@ author: "Miguel Cotto Promotions"
 image: "/assets/news/1776686880562-upload.jpg"
 image_focus: "50% 16%"
 category: "Press Release"
-featured: true
+featured: false
 excerpt: "BELISA LÓPEZ DE JESÚS CAE EN LA REVANCHA ANTE GÉNESIS LÓPEZ"
 gallery:
-  - "/assets/news/1776686955529-gallery-9e5r4.jpg"
-  - "/assets/news/1776686957220-gallery-z0p99.jpg"
-  - "/assets/news/1776686958507-gallery-sp4g4.jpg"
-  - "/assets/news/1776686960154-gallery-7vh1m.jpg"
-  - "/assets/news/1776686961479-gallery-lzju3.jpg"
-  - "/assets/news/1776686962769-gallery-1oj1n.jpg"
-  - "/assets/news/1776686964511-gallery-z5uwn.jpg"
-  - "/assets/news/1776686966709-gallery-fafco.jpg"
-  - "/assets/news/1776686968174-gallery-ardfs.jpg"
-  - "/assets/news/1776686971923-gallery-dqjts.jpg"
-  - "/assets/news/1776686973310-gallery-p2fct.jpg"
+  []
 ---
 **(Aibonito, Puerto Rico)** – El boxeo boricua volvió a vibrar con fuerza en Aibonito cuando Miguel Cotto Promotions y H2 Entertainment presentaron: iTF…Es la pelea que encendió el Coliseo Marrón Aponte con una noche de acción pura, donde cada combate reafirmó que en este escenario, lo único que importa…son las peleas. “iTF…Es la pelea’ sigue cumpliendo su propósito: presentar peleas competitivas donde los prospectos tienen que probarse. Aquí no hay peleas fáciles, y eso es lo que hace crecer a nuestros boxeadores.", dijo Héctor Soto presidente y promotor.
 
