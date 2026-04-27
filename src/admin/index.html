@@ -1190,25 +1190,6 @@
         </div>
       </div>
 
-      <!-- Focal Point Modal -->
-      <div id="focal-modal">
-        <div class="modal-header">
-          <span class="modal-title">🎯 Click anywhere on the image to set the focal point</span>
-          <button class="modal-close" id="close-focal-modal">✕</button>
-        </div>
-        <div class="modal-image-wrap" id="modal-image-wrap">
-          <img id="modal-img" alt="Set focal point" />
-          <div class="modal-overlay" id="modal-overlay"></div>
-          <div class="modal-crosshair-h" id="modal-ch"></div>
-          <div class="modal-crosshair-v" id="modal-cv"></div>
-          <div class="modal-dot" id="modal-dot" style="left:50%;top:50%;"></div>
-        </div>
-        <div class="modal-footer">
-          <span class="modal-coords">Focus point: <span id="modal-coords-text">50% 50%</span></span>
-          <button class="btn-modal-done" id="modal-done-btn">✓ Done</button>
-        </div>
-      </div>
-
       <div class="section-label">Article Body *</div>
 
       <div class="quill-wrapper">
@@ -1251,6 +1232,25 @@
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- Focal Point Modal (top-level so it stays visible across tabs) -->
+<div id="focal-modal">
+  <div class="modal-header">
+    <span class="modal-title">🎯 Click anywhere on the image to set the focal point</span>
+    <button class="modal-close" id="close-focal-modal">✕</button>
+  </div>
+  <div class="modal-image-wrap" id="modal-image-wrap">
+    <img id="modal-img" alt="Set focal point" />
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="modal-crosshair-h" id="modal-ch"></div>
+    <div class="modal-crosshair-v" id="modal-cv"></div>
+    <div class="modal-dot" id="modal-dot" style="left:50%;top:50%;"></div>
+  </div>
+  <div class="modal-footer">
+    <span class="modal-coords">Focus point: <span id="modal-coords-text">50% 50%</span></span>
+    <button class="btn-modal-done" id="modal-done-btn">✓ Done</button>
   </div>
 </div>
 
@@ -1611,6 +1611,8 @@
 
   // ===== FOCAL POINT MODAL =====
   document.getElementById('open-focal-modal').addEventListener('click', () => {
+    focalContext = 'post';
+    focalEventId = null;
     document.getElementById('focal-modal').classList.add('open');
     document.body.style.overflow = 'hidden';
   });
