@@ -1860,6 +1860,7 @@
   let focalContext = 'post'; // 'post' or 'event'
   let focalEventId = null;
   const evState = { events: [], openId: null };
+  const evPreview = {}; // id -> base64 data URL while Vercel rebuilds the asset
 
   function evNewId() {
     return `ev-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
@@ -1921,8 +1922,9 @@
       const isNew = !!ev._new;
       const focusStr = ev.image_focus || '50% 50%';
 
-      const thumbHtml = ev.image
-        ? `<img class="ev-thumb" src="${evEscape(ev.image)}" alt="" style="object-position:${evEscape(focusStr)}" />`
+      const previewSrc = evPreview[ev.id] || ev.image;
+      const thumbHtml = previewSrc
+        ? `<img class="ev-thumb" src="${evEscape(previewSrc)}" alt="" style="object-position:${evEscape(focusStr)}" />`
         : `<div class="ev-thumb-empty">🥊</div>`;
 
       const summaryTitle = ev.title || (isNew ? '(Nuevo evento sin titulo)' : '(Sin titulo)');
@@ -1969,7 +1971,7 @@
             </div>
 
             <div class="image-card ${ev.image ? 'visible' : ''}" id="ev-image-card-${ev.id}">
-              <img class="image-thumb" src="${evEscape(ev.image)}" alt="" />
+              <img class="image-thumb" src="${evEscape(previewSrc)}" alt="" />
               <div class="image-card-info">
                 <p style="font-weight:700">${ev.image ? evEscape(ev.image.split('/').pop()) : ''}</p>
                 <div class="focal-badge ev-focal-badge" style="background:var(--primary);color:white">🎯 Focus: ${evEscape(focusStr)}</div>
@@ -2062,6 +2064,7 @@
     if (!ev) return;
     ev.image = '';
     ev.image_focus = '50% 50%';
+    delete evPreview[id];
     evRender();
   }
 
@@ -2089,8 +2092,11 @@
             target.image = data.path;
             target.image_focus = '50% 50%';
           }
+          // Cache the local data URL so the preview shows immediately while
+          // Vercel rebuilds and the saved path becomes reachable.
+          evPreview[id] = ev.target.result;
           evRender();
-          showToast('✅ Banner subido', 'success');
+          showToast('✅ Banner subido. Guarda el evento para publicarlo.', 'success');
         } else {
           showToast('Upload failed: ' + (data.error || 'Unknown'), 'error');
         }
@@ -2104,7 +2110,7 @@
     if (!ev || !ev.image) return;
     focalContext = 'event';
     focalEventId = id;
-    document.getElementById('modal-img').src = ev.image;
+    document.getElementById('modal-img').src = evPreview[id] || ev.image;
     const parts = (ev.image_focus || '50% 50%').split(' ');
     updateModalDot(parseInt(parts[0]) || 50, parseInt(parts[1]) || 50);
     document.getElementById('focal-modal').classList.add('open');
