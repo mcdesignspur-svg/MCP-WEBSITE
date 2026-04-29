@@ -17,5 +17,8 @@
     { "source": "/boxers.html", "destination": "/boxers" },
     { "source": "/events.html", "destination": "/events" },
     { "source": "/about.html", "destination": "/about" }
+  ],
+  "crons": [
+    { "path": "/api/rebuild", "schedule": "0 7 * * *" }
   ]
 }
