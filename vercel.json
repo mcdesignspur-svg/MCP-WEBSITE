@@ -12,11 +12,6 @@
     }
   ],
   "rewrites": [
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "admin.miguelcottopromotions.com" }],
-      "destination": "/admin/"
-    },
     { "source": "/index.html", "destination": "/" },
     { "source": "/news.html", "destination": "/news" },
     { "source": "/boxers.html", "destination": "/boxers" },
