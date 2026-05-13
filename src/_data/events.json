@@ -9,5 +9,16 @@
     "ticket_link": "https://www.ticketmaster.com/event/010064869A6C7FD0?utm_source=Hispanic+Media&utm_campaign=ff8e6aa6a8-EMAIL_CAMPAIGN_2018_02_04_COPY_01&utm_medium=email&utm_term=0_b4c1adc051-ff8e6aa6a8-468129785",
     "watch_link": "https://www.dazn.com/en-US/sport/Sport:2x2oqzx60orpoeugkd754ga17?tab=schedule",
     "is_main": true
+  },
+  {
+    "id": "ev-mp47dg56-pux2xq",
+    "title": "Yadriel Cabán - Choke de Campeones",
+    "date_display": "MAY 30th",
+    "location": "Palacio de Recreación y Deportes, Mayagüez",
+    "image": "/assets/news/1778685428401-event-banner.png",
+    "image_focus": "50% 29%",
+    "ticket_link": "https://www.ticketera.com/events/detail/choke-de-campeones",
+    "watch_link": "",
+    "is_main": false
   }
 ]
