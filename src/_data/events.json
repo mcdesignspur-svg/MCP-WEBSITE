@@ -9,5 +9,16 @@
     "ticket_link": "",
     "watch_link": "",
     "is_main": false
+  },
+  {
+    "id": "ev-mpvgugzj-4ncb2d",
+    "title": "Collazo vs Canoy",
+    "date_display": "June 20th",
+    "location": "Frontwave Arena in Oceanside, CAL",
+    "image": "/assets/news/1780333924020-event-banner.jpg",
+    "image_focus": "50% 50%",
+    "ticket_link": "",
+    "watch_link": "",
+    "is_main": true
   }
 ]
