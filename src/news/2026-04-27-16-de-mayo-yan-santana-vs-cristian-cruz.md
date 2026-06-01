@@ -7,7 +7,7 @@ author: "Miguel Cotto Promotions"
 image: "/assets/news/1777293648161-upload.jpg"
 image_focus: "50% 50%"
 category: "Announcement"
-featured: true
+featured: false
 excerpt: "Se suman a la cartelera Davis vs. Albright II EN VIVO por DAZN. La transmisión en vivo por DAZN desde el Scope Arena de Norfolk comenzará a las 8 p.m. ET / 5 p.m. PT"
 gallery:
   []
