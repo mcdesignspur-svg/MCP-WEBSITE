@@ -7,11 +7,10 @@ author: "Miguel Cotto Promotions"
 image: "/assets/news/1778522793489-upload.jpg"
 image_focus: "50% 25%"
 category: "Announcement"
-featured: true
+featured: false
 excerpt: ""
 gallery:
-  - "/assets/news/1778522859071-gallery-co4k9.jpg"
-  - "/assets/news/1778522860501-gallery-l09gl.jpg"
+  []
 ---
 **(Caguas, Puerto Rico)** – En el corazón de La Romana, donde el sol quema y el aroma dulce y pegajoso de la caña llena el aire, Yan Santana comenzó su lucha mucho antes de ponerse los guantes por primera vez. Para muchos en la República Dominicana, los interminables campos de caña de azúcar, los cañaverales, representan una vida de trabajo arduo y sudor, un ciclo que a menudo parece imposible de romper. Pero para Yan, conocido en el mundo del boxeo como "Dangerous", estos campos no fueron una prisión, sino la forja de un campeón. Yan es un "Hijo del Cañaveral", un título que lleva con el mismo orgullo que cualquier cinturón de campeonato. Sus raíces están profundamente enterradas en la tierra que nutre a su comunidad, y la fuerza implacable que muestra en el ring es un reflejo directo de la resiliencia que aprendió entre las cañas más altas. No es solo un boxeador con un record invicto de 16 victoria y 13 anesteciados si no que es símbolo de una comunidad que se niega a ser definida por sus circunstancias.
 
