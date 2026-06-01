@@ -1,16 +1,5 @@
 [
   {
-    "id": "ev-mp4ednru-d1k2a0",
-    "title": "ITF ES LA PELEA: CAGUAS",
-    "date_display": "August 15",
-    "location": "Coliseo Roger Méndoza",
-    "image": "/assets/news/1778697227064-event-banner.png",
-    "image_focus": "50% 50%",
-    "ticket_link": "",
-    "watch_link": "",
-    "is_main": false
-  },
-  {
     "id": "ev-mpvgugzj-4ncb2d",
     "title": "Collazo vs Canoy",
     "date_display": "June 20th",
@@ -20,5 +9,16 @@
     "ticket_link": "",
     "watch_link": "",
     "is_main": true
+  },
+  {
+    "id": "ev-mp4ednru-d1k2a0",
+    "title": "ITF ES LA PELEA: CAGUAS",
+    "date_display": "August 15",
+    "location": "Coliseo Roger Méndoza",
+    "image": "/assets/news/1778697227064-event-banner.png",
+    "image_focus": "50% 50%",
+    "ticket_link": "",
+    "watch_link": "",
+    "is_main": false
   }
 ]
