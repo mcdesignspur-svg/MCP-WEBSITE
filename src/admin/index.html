@@ -1143,6 +1143,7 @@
         <button class="tab-btn active" id="tab-editor" onclick="switchTab('editor')">✏️ <span class="tab-label">Editor</span></button>
         <button class="tab-btn" id="tab-posts" onclick="switchTab('posts')">📋 <span class="tab-label">All Posts</span></button>
         <button class="tab-btn" id="tab-event" onclick="switchTab('event')">🥊 <span class="tab-label">Events</span></button>
+        <button class="tab-btn" id="tab-boxers" onclick="switchTab('boxers')">👊 <span class="tab-label">Roster</span></button>
         <button class="tab-btn" id="tab-live" onclick="switchTab('live')">🔴 <span class="tab-label">Live</span></button>
       </div>
     </div>
@@ -1253,6 +1254,19 @@
 
       <div id="ev-list-container">
         <div class="cards-loading"><span>📥</span>Cargando eventos...</div>
+      </div>
+    </main>
+
+    <main class="editor-panel" id="boxers-panel" style="display:none">
+      <div class="section-label" style="margin-top:0">Roster de Boxeadores</div>
+
+      <div class="ev-toolbar">
+        <p>Edita el record, los KOs y el link de BoxRec de cada boxeador. Activa <strong>Campeon</strong> para el badge dorado y <strong>Destacado</strong> para que salga en el home.</p>
+        <button class="btn-publish" onclick="bxAddNew()" style="white-space: nowrap;">+ Anadir Boxeador</button>
+      </div>
+
+      <div id="bx-list-container">
+        <div class="cards-loading"><span>📥</span>Cargando roster...</div>
       </div>
     </main>
 
@@ -1415,6 +1429,7 @@
 
     document.getElementById('editor-panel').style.display = (tabId === 'editor') ? 'block' : 'none';
     document.getElementById('event-panel').style.display = (tabId === 'event') ? 'block' : 'none';
+    document.getElementById('boxers-panel').style.display = (tabId === 'boxers') ? 'block' : 'none';
     document.getElementById('live-panel').style.display = (tabId === 'live') ? 'block' : 'none';
     document.getElementById('posts-view').style.display = (tabId === 'posts') ? 'block' : 'none';
     
@@ -2270,6 +2285,335 @@
 
   // Load events when admin opens the events tab the first time (and on init)
   evLoad();
+
+  // ===== ROSTER (boxers) =====
+  const bxState = { boxers: [], openId: null };
+  const bxPreview = {}; // id -> base64 data URL while Vercel rebuilds the asset
+
+  function bxNewId() {
+    return `bx-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+  }
+
+  function bxBlank() {
+    return {
+      id: bxNewId(),
+      name: '',
+      alias: '',
+      is_champion: false,
+      division: '',
+      weight: '',
+      record: '0-0-0',
+      kos: '0',
+      boxrec: '',
+      image: '',
+      featured: false,
+      frame: '',
+      _new: true
+    };
+  }
+
+  function bxEscape(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function bxDisplayName(b) {
+    const name = b.name || '';
+    const alias = b.alias || '';
+    const parts = name.split(' ');
+    if (alias && parts.length > 1) return `${parts[0]} "${alias}" ${parts.slice(1).join(' ')}`;
+    if (alias) return `${name} "${alias}"`;
+    return name;
+  }
+
+  function bxSlug(name) {
+    return (name || 'boxer')
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'boxer';
+  }
+
+  async function bxLoad() {
+    const container = document.getElementById('bx-list-container');
+    container.innerHTML = '<div class="cards-loading"><span>📥</span>Cargando roster...</div>';
+    try {
+      const res = await fetch('/api/roster');
+      const data = await res.json();
+      const list = Array.isArray(data && data.boxers) ? data.boxers : [];
+      bxState.boxers = list.map(b => ({ ...b, id: b.id || bxNewId() }));
+    } catch (err) {
+      console.error('Failed to load roster', err);
+      bxState.boxers = [];
+    }
+    bxRender();
+  }
+
+  function bxRender() {
+    const container = document.getElementById('bx-list-container');
+    if (!bxState.boxers.length) {
+      container.innerHTML = `
+        <div class="ev-empty">
+          <span>👊</span>
+          <p style="font-size:0.9rem; margin-bottom:0.5rem;"><strong>No hay boxeadores todavia.</strong></p>
+          <p style="font-size:0.8rem;">Pulsa <strong>+ Anadir Boxeador</strong> arriba para crear el primero.</p>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = bxState.boxers.map((b, idx) => {
+      const isOpen = bxState.openId === b.id;
+      const isNew = !!b._new;
+      const isFirst = idx === 0;
+      const isLast = idx === bxState.boxers.length - 1;
+
+      const previewSrc = bxPreview[b.id] || b.image;
+      const objPos = b.frame === 'top' ? 'top' : 'center';
+      const thumbHtml = previewSrc
+        ? `<img class="ev-thumb" src="${bxEscape(previewSrc)}" alt="" style="object-position:${objPos}" />`
+        : `<div class="ev-thumb-empty">👊</div>`;
+
+      const summaryTitle = bxDisplayName(b) || (isNew ? '(Nuevo boxeador)' : '(Sin nombre)');
+      const summaryMeta = [b.division, b.record ? `${b.record} (${b.kos || 0} KO)` : ''].filter(Boolean).join(' · ') || 'Sin division';
+      const badges = `${b.is_champion ? '<span class="ev-main-badge">🏆 Campeon</span>' : ''}${b.featured ? '<span class="ev-main-badge">⭐ Destacado</span>' : ''}`;
+
+      return `
+        <div class="ev-row ${isOpen ? 'open' : ''} ${isNew ? 'is-new' : ''}" data-id="${b.id}">
+          <div class="ev-summary" onclick="bxToggleOpen('${b.id}')">
+            ${thumbHtml}
+            <div class="ev-summary-text">
+              <div class="ev-summary-title">${bxEscape(summaryTitle)}</div>
+              <div class="ev-summary-meta">${bxEscape(summaryMeta)}${isNew ? ' · <span>nuevo, sin guardar</span>' : ''}</div>
+            </div>
+            ${badges}
+            <div class="ev-reorder" onclick="event.stopPropagation()">
+              <button onclick="bxMove('${b.id}',-1)" ${isFirst ? 'disabled' : ''} title="Mover arriba"><span class="material-symbols-outlined">keyboard_arrow_up</span></button>
+              <button onclick="bxMove('${b.id}',1)" ${isLast ? 'disabled' : ''} title="Mover abajo"><span class="material-symbols-outlined">keyboard_arrow_down</span></button>
+            </div>
+            <span class="material-symbols-outlined ev-chevron">expand_more</span>
+          </div>
+
+          <div class="ev-form">
+            <div class="fields-row">
+              <div class="field-group">
+                <label>Nombre</label>
+                <input type="text" value="${bxEscape(b.name)}" placeholder="E.g. Oscar Collazo" oninput="bxFieldChange('${b.id}','name',this.value)" />
+              </div>
+              <div class="field-group">
+                <label>Alias / Apodo</label>
+                <input type="text" value="${bxEscape(b.alias)}" placeholder="E.g. El Pupilo" oninput="bxFieldChange('${b.id}','alias',this.value)" />
+              </div>
+            </div>
+
+            <div class="fields-row">
+              <div class="field-group">
+                <label>Division</label>
+                <input type="text" list="bx-divisions" value="${bxEscape(b.division)}" placeholder="E.g. Lightweight" oninput="bxFieldChange('${b.id}','division',this.value)" />
+              </div>
+              <div class="field-group">
+                <label>Peso</label>
+                <input type="text" value="${bxEscape(b.weight)}" placeholder="E.g. 135LBS" oninput="bxFieldChange('${b.id}','weight',this.value)" />
+              </div>
+            </div>
+
+            <div class="fields-row">
+              <div class="field-group">
+                <label>Record (V-D-E)</label>
+                <input type="text" value="${bxEscape(b.record)}" placeholder="E.g. 14-0-0" oninput="bxFieldChange('${b.id}','record',this.value)" />
+              </div>
+              <div class="field-group">
+                <label>KOs</label>
+                <input type="text" value="${bxEscape(b.kos)}" placeholder="E.g. 11" oninput="bxFieldChange('${b.id}','kos',this.value)" />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label>BoxRec URL</label>
+              <input type="text" value="${bxEscape(b.boxrec)}" placeholder="https://boxrec.com/en/box-pro/..." oninput="bxFieldChange('${b.id}','boxrec',this.value)" />
+            </div>
+
+            <div class="section-label" style="margin-top:1rem">Foto</div>
+
+            <div class="image-upload-area" id="bx-upload-area-${b.id}" onclick="document.getElementById('bx-image-input-${b.id}').click()" style="${b.image ? 'display:none;' : ''}">
+              <input type="file" id="bx-image-input-${b.id}" accept="image/*" style="display:none;" onchange="bxHandleImageUpload(event,'${b.id}')" />
+              <div class="upload-placeholder">
+                <span>🖼️</span>
+                <p>Pulsa para subir una foto</p>
+                <p style="font-size:0.75rem; margin-top:0.25rem;">JPG, PNG, WebP — Max 5MB · ideal vertical (3:4)</p>
+              </div>
+            </div>
+
+            <div class="image-card ${b.image ? 'visible' : ''}" id="bx-image-card-${b.id}">
+              <img class="image-thumb" src="${bxEscape(previewSrc)}" alt="" style="object-position:${objPos}" />
+              <div class="image-card-info">
+                <p style="font-weight:700">${b.image ? bxEscape(b.image.split('/').pop()) : ''}</p>
+                <div class="field-group" style="margin-top:0.5rem; margin-bottom:0;">
+                  <label style="font-size:0.65rem;">Encuadre</label>
+                  <select onchange="bxFieldChange('${b.id}','frame',this.value); bxRender();" style="width:auto;">
+                    <option value=""${b.frame !== 'top' ? ' selected' : ''}>Centrado</option>
+                    <option value="top"${b.frame === 'top' ? ' selected' : ''}>Arriba (top)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="image-card-actions" style="display:flex; gap:0.5rem;">
+                <button class="btn-remove-img" onclick="bxRemoveImage('${b.id}')" style="flex:1">✕ Remove</button>
+              </div>
+            </div>
+
+            <div class="ev-actions">
+              <button class="ev-toggle-main ${b.is_champion ? 'on' : ''}" onclick="bxToggleField('${b.id}','is_champion')" title="Badge de campeon">
+                <span class="toggle-track"><span class="toggle-knob"></span></span>
+                <span>${b.is_champion ? '🏆 Campeon' : 'Campeon'}</span>
+              </button>
+              <button class="ev-toggle-main ${b.featured ? 'on' : ''}" onclick="bxToggleField('${b.id}','featured')" title="Mostrar en el home">
+                <span class="toggle-track"><span class="toggle-knob"></span></span>
+                <span>${b.featured ? '⭐ Destacado' : 'Destacado'}</span>
+              </button>
+              <button class="btn-publish" onclick="bxSave('${b.id}')">💾 Guardar</button>
+              <button class="btn-delete-event" onclick="bxDelete('${b.id}')">🗑️ Borrar</button>
+            </div>
+          </div>
+        </div>`;
+    }).join('') + `<datalist id="bx-divisions">${[...new Set(bxState.boxers.map(b => b.division).filter(Boolean))].sort().map(d => `<option value="${bxEscape(d)}"></option>`).join('')}</datalist>`;
+  }
+
+  function bxToggleOpen(id) {
+    bxState.openId = (bxState.openId === id) ? null : id;
+    bxRender();
+  }
+
+  function bxFieldChange(id, field, value) {
+    const b = bxState.boxers.find(x => x.id === id);
+    if (!b) return;
+    b[field] = value;
+    const row = document.querySelector(`.ev-row[data-id="${id}"]`);
+    if (row) {
+      if (field === 'name' || field === 'alias') {
+        const t = row.querySelector('.ev-summary-title');
+        if (t) t.textContent = bxDisplayName(b) || '(Sin nombre)';
+      }
+      if (field === 'division' || field === 'record' || field === 'kos') {
+        const meta = row.querySelector('.ev-summary-meta');
+        if (meta) meta.textContent = [b.division, b.record ? `${b.record} (${b.kos || 0} KO)` : ''].filter(Boolean).join(' · ') || 'Sin division';
+      }
+    }
+  }
+
+  function bxAddNew() {
+    const b = bxBlank();
+    bxState.boxers.push(b);
+    bxState.openId = b.id;
+    bxRender();
+    setTimeout(() => {
+      const row = document.querySelector(`.ev-row[data-id="${b.id}"]`);
+      if (row) row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 50);
+  }
+
+  function bxMove(id, delta) {
+    const idx = bxState.boxers.findIndex(x => x.id === id);
+    if (idx < 0) return;
+    const target = idx + delta;
+    if (target < 0 || target >= bxState.boxers.length) return;
+    const [item] = bxState.boxers.splice(idx, 1);
+    bxState.boxers.splice(target, 0, item);
+    bxRender();
+    bxCommit('↕️ Orden actualizado');
+  }
+
+  function bxToggleField(id, field) {
+    const b = bxState.boxers.find(x => x.id === id);
+    if (!b) return;
+    b[field] = !b[field];
+    bxRender();
+    bxCommit(field === 'is_champion' ? '🏆 Campeon actualizado' : '⭐ Destacado actualizado');
+  }
+
+  function bxRemoveImage(id) {
+    const b = bxState.boxers.find(x => x.id === id);
+    if (!b) return;
+    b.image = '';
+    delete bxPreview[id];
+    bxRender();
+  }
+
+  async function bxHandleImageUpload(e, id) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) return showToast('Imagen muy grande. Max 5MB.', 'error');
+    const b = bxState.boxers.find(x => x.id === id);
+    showToast('Subiendo foto...', 'info');
+
+    const reader = new FileReader();
+    reader.onload = async (ev) => {
+      const base64 = ev.target.result.split(',')[1];
+      const ext = (file.name.split('.').pop() || 'png').toLowerCase();
+      const safeName = `${bxSlug(b && b.name)}-${Date.now().toString(36)}.${ext}`;
+      try {
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionToken}` },
+          body: JSON.stringify({ filename: safeName, content: base64, folder: 'boxers' })
+        });
+        const data = await res.json();
+        if (data.success) {
+          const target = bxState.boxers.find(x => x.id === id);
+          if (target) target.image = data.path;
+          bxPreview[id] = ev.target.result;
+          bxRender();
+          showToast('✅ Foto subida. Guarda el boxeador para publicarla.', 'success');
+        } else {
+          showToast('Upload failed: ' + (data.error || 'Unknown'), 'error');
+        }
+      } catch (err) { showToast('Error subiendo foto', 'error'); }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function bxCommit(successMsg) {
+    try {
+      const res = await fetch('/api/roster', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionToken}` },
+        body: JSON.stringify({ boxers: bxState.boxers.map(({ _new, id, ...rest }) => rest) })
+      });
+      const data = await res.json();
+      if (data.success) {
+        bxState.boxers.forEach(b => { delete b._new; });
+        if (successMsg) showToast(successMsg, 'success');
+        return true;
+      }
+      showToast('Error al guardar: ' + (data.error || 'Unknown'), 'error');
+      return false;
+    } catch (err) {
+      showToast('Network error al guardar', 'error');
+      return false;
+    }
+  }
+
+  async function bxSave(id) {
+    const b = bxState.boxers.find(x => x.id === id);
+    if (!b) return;
+    if (!b.name) {
+      showToast('Anade al menos el nombre antes de guardar.', 'error');
+      return;
+    }
+    await bxCommit('✅ Boxeador guardado');
+  }
+
+  async function bxDelete(id) {
+    const b = bxState.boxers.find(x => x.id === id);
+    if (!b) return;
+    const label = b.name || '(sin nombre)';
+    if (!confirm(`Borrar a "${label}" del roster?`)) return;
+    bxState.boxers = bxState.boxers.filter(x => x.id !== id);
+    if (bxState.openId === id) bxState.openId = null;
+    bxRender();
+    await bxCommit('🗑️ Boxeador borrado');
+  }
+
+  bxLoad();
 
   // ===== LIVE STREAM (homepage YouTube embed) =====
   const lsState = { youtube_id: '', title: '', is_live: false };

@@ -22,7 +22,27 @@ module.exports = function(eleventyConfig) {
     eleventyConfig.addFilter("limit", (array, limit) => {
         return array.slice(0, limit);
     });
-    
+
+    // Boxer display name: inserts the alias after the first name when present.
+    // "Oscar Collazo" + "El Pupilo" -> 'Oscar "El Pupilo" Collazo'
+    eleventyConfig.addFilter("boxerName", (b) => {
+        if (!b) return "";
+        const name = b.name || "";
+        const alias = b.alias || "";
+        const parts = name.split(" ");
+        if (alias && parts.length > 1) {
+            return `${parts[0]} "${alias}" ${parts.slice(1).join(" ")}`;
+        }
+        if (alias) return `${name} "${alias}"`;
+        return name;
+    });
+
+    // Sorted unique list of divisions from the boxers array (for the filter dropdown).
+    eleventyConfig.addFilter("divisions", (boxers) => {
+        if (!Array.isArray(boxers)) return [];
+        return [...new Set(boxers.map((b) => b.division).filter(Boolean))].sort();
+    });
+
     return {
         dir: {
             input: "src",

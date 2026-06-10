@@ -51,11 +51,13 @@ module.exports = async function handler(req, res) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  const { filename, content } = req.body;
+  const { filename, content, folder } = req.body;
   if (!filename || !content) return res.status(400).json({ error: "filename and content are required" });
 
+  // Whitelist the target subfolder under src/assets (defaults to news for back-compat).
+  const dir = folder === "boxers" ? "boxers" : "news";
   const safeName = filename.replace(/[^a-zA-Z0-9.\-_]/g, "-").toLowerCase();
-  const filePath = `src/assets/news/${safeName}`;
+  const filePath = `src/assets/${dir}/${safeName}`;
 
   // Check if exists
   let sha;
@@ -72,7 +74,7 @@ module.exports = async function handler(req, res) {
   if (result.status === 200 || result.status === 201) {
     return res.status(200).json({
       success: true,
-      path: `/assets/news/${safeName}`,
+      path: `/assets/${dir}/${safeName}`,
       url: result.body.content?.download_url,
     });
   }
