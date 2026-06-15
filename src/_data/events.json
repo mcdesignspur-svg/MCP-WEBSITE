@@ -8,17 +8,17 @@
     "image_focus": "50% 50%",
     "ticket_link": "https://tix.axs.com/6ESNEgAAAABrKxOEAAAAAAAF%2fv%2f%2f%2fwD%2f%2f%2f%2f%2fDmZyb250d2F2ZWFyZW5hAP%2f%2f%2f%2f%2f%2f%2f%2f%2f%2f/shop/search?skin=&tags=&cpch=&cpdate=&cprid=&cpid=&cpcn=&cpdid=&cpdn=&cpsrc=&intoff=&cid=&utm_source=&utm_medium=&utm_campaign=&utm_term=&utm_content=&aff=&clickref=&promocode=&originalReferringURL=https%3A%2F%2Fwww.axs.com%2F%3F__cf_chl_tk%3DS9SrA1leDOw0CNKhR53D7gzTT0JTqqLvYZFihu2O2uw-1780334139-1.0.1.1-51fPvDxPNqCIC6J_3MebTjxt6sGWCzoCEfZQQjlXkbM&upgrade=&mkt_campaign=&irclickid=&gclid=&fbclid=&_gl=&axsEventId=1463661&q=cdaabf43-b9d9-4903-81d2-500f8e908f34&p=2649b999-929a-485a-b971-5b96a4909765&ts=1780334197&c=axs&e=3112481048655659&rt=Safetynet&h=5398f94be98dbe4b9d297ec11183285b",
     "watch_link": "",
-    "is_main": true
+    "is_main": false
   },
   {
     "id": "ev-mp4ednru-d1k2a0",
     "title": "ITF ES LA PELEA: CAGUAS",
     "date_display": "August 15",
     "location": "Coliseo Roger Méndoza",
-    "image": "/assets/news/1778697227064-event-banner.png",
+    "image": "/assets/news/1781525765873-event-banner.png",
     "image_focus": "50% 50%",
-    "ticket_link": "",
-    "watch_link": "",
-    "is_main": false
+    "ticket_link": "https://boletos.prticket.com/events/en/itf-caguas",
+    "watch_link": "https://www.youtube.com/@MiguelCottoPromotions",
+    "is_main": true
   }
 ]
