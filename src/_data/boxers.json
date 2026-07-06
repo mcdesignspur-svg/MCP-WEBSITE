@@ -260,19 +260,6 @@
     "frame": ""
   },
   {
-    "name": "Ryan Enoch Rodríguez",
-    "alias": "",
-    "is_champion": false,
-    "division": "Jr. Welterweight",
-    "weight": "140LBS",
-    "record": "7-0-0",
-    "kos": "2",
-    "boxrec": "https://boxrec.com/en/box-pro/983571",
-    "image": "/assets/boxers/ryan-rodriguez.png",
-    "featured": false,
-    "frame": ""
-  },
-  {
     "name": "Dylan Jael Feliciano",
     "alias": "",
     "is_champion": false,
@@ -283,6 +270,19 @@
     "boxrec": "https://boxrec.com/en/box-pro/983575",
     "image": "/assets/boxers/dylan-jael-feliciano-mr96j51y.png",
     "featured": true,
+    "frame": ""
+  },
+  {
+    "name": "Ryan Enoch Rodríguez",
+    "alias": "",
+    "is_champion": false,
+    "division": "Jr. Welterweight",
+    "weight": "140LBS",
+    "record": "7-0-0",
+    "kos": "2",
+    "boxrec": "https://boxrec.com/en/box-pro/983571",
+    "image": "/assets/boxers/ryan-rodriguez.png",
+    "featured": false,
     "frame": ""
   },
   {
