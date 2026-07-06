@@ -182,19 +182,6 @@
     "frame": ""
   },
   {
-    "name": "Christian Barreto",
-    "alias": "El Capitán",
-    "is_champion": false,
-    "division": "Lightweight",
-    "weight": "135LBS",
-    "record": "15-0-0",
-    "kos": "9",
-    "boxrec": "https://boxrec.com/en/box-pro/860928",
-    "image": "/assets/boxers/christian-barreto.png",
-    "featured": false,
-    "frame": ""
-  },
-  {
     "name": "Dylan Jael Feliciano",
     "alias": "",
     "is_champion": false,
@@ -205,6 +192,19 @@
     "boxrec": "https://boxrec.com/en/box-pro/983575",
     "image": "/assets/boxers/dylan-jael-feliciano-mr96j51y.png",
     "featured": true,
+    "frame": ""
+  },
+  {
+    "name": "Christian Barreto",
+    "alias": "El Capitán",
+    "is_champion": false,
+    "division": "Lightweight",
+    "weight": "135LBS",
+    "record": "15-0-0",
+    "kos": "9",
+    "boxrec": "https://boxrec.com/en/box-pro/860928",
+    "image": "/assets/boxers/christian-barreto.png",
+    "featured": false,
     "frame": ""
   },
   {
