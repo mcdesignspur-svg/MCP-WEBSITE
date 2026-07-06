@@ -169,19 +169,6 @@
     "frame": "top"
   },
   {
-    "name": "Bryan Chevalier",
-    "alias": "Chary",
-    "is_champion": false,
-    "division": "Jr. Lightweight",
-    "weight": "130LBS",
-    "record": "23-3-1",
-    "kos": "16",
-    "boxrec": "https://boxrec.com/en/box-pro/681548",
-    "image": "/assets/boxers/bryan-chevalier.png",
-    "featured": false,
-    "frame": ""
-  },
-  {
     "name": "Dylan Jael Feliciano",
     "alias": "",
     "is_champion": false,
@@ -192,6 +179,19 @@
     "boxrec": "https://boxrec.com/en/box-pro/983575",
     "image": "/assets/boxers/dylan-jael-feliciano-mr96j51y.png",
     "featured": true,
+    "frame": ""
+  },
+  {
+    "name": "Bryan Chevalier",
+    "alias": "Chary",
+    "is_champion": false,
+    "division": "Jr. Lightweight",
+    "weight": "130LBS",
+    "record": "23-3-1",
+    "kos": "16",
+    "boxrec": "https://boxrec.com/en/box-pro/681548",
+    "image": "/assets/boxers/bryan-chevalier.png",
+    "featured": false,
     "frame": ""
   },
   {
