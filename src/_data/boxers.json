@@ -1,18 +1,5 @@
 [
   {
-    "name": "Oscar Collazo",
-    "alias": "El Pupilo",
-    "is_champion": true,
-    "division": "Mini-Flyweight",
-    "weight": "105LBS",
-    "record": "15-0-0",
-    "kos": "12",
-    "boxrec": "https://boxrec.com/en/box-pro/919293",
-    "image": "/assets/boxers/oscar-collazo.png",
-    "featured": true,
-    "frame": ""
-  },
-  {
     "name": "Belisa López De Jesús",
     "alias": "",
     "is_champion": false,
@@ -23,6 +10,19 @@
     "boxrec": "https://boxrec.com/en/box-am/1082539",
     "image": "/assets/boxers/belisa-lopez-de-jesus.png",
     "featured": false,
+    "frame": ""
+  },
+  {
+    "name": "Oscar Collazo",
+    "alias": "El Pupilo",
+    "is_champion": true,
+    "division": "Mini-Flyweight",
+    "weight": "105LBS",
+    "record": "15-0-0",
+    "kos": "12",
+    "boxrec": "https://boxrec.com/en/box-pro/919293",
+    "image": "/assets/boxers/oscar-collazo.png",
+    "featured": true,
     "frame": ""
   },
   {
@@ -294,7 +294,7 @@
     "record": "1-0-0",
     "kos": "0",
     "boxrec": "https://boxrec.com/en/box-pro/983575",
-    "image": "/assets/boxers/dylan-jael-feliciano-mr96bd1m.png",
+    "image": "/assets/boxers/dylan-jael-feliciano-mr96j51y.png",
     "featured": true,
     "frame": ""
   }
