@@ -208,19 +208,6 @@
     "frame": ""
   },
   {
-    "name": "Leonardo Sánchez",
-    "alias": "Bazooka",
-    "is_champion": false,
-    "division": "Lightweight",
-    "weight": "135LBS",
-    "record": "11-0-0",
-    "kos": "8",
-    "boxrec": "https://boxrec.com/en/box-pro/1106204",
-    "image": "/assets/boxers/leonardo-sanchez.png",
-    "featured": false,
-    "frame": ""
-  },
-  {
     "name": "Dylan Jael Feliciano",
     "alias": "",
     "is_champion": false,
@@ -231,6 +218,19 @@
     "boxrec": "https://boxrec.com/en/box-pro/983575",
     "image": "/assets/boxers/dylan-jael-feliciano-mr96j51y.png",
     "featured": true,
+    "frame": ""
+  },
+  {
+    "name": "Leonardo Sánchez",
+    "alias": "Bazooka",
+    "is_champion": false,
+    "division": "Lightweight",
+    "weight": "135LBS",
+    "record": "11-0-0",
+    "kos": "8",
+    "boxrec": "https://boxrec.com/en/box-pro/1106204",
+    "image": "/assets/boxers/leonardo-sanchez.png",
+    "featured": false,
     "frame": ""
   },
   {
