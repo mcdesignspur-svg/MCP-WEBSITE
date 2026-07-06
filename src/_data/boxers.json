@@ -195,19 +195,6 @@
     "frame": ""
   },
   {
-    "name": "Willjay De la Paz",
-    "alias": "",
-    "is_champion": false,
-    "division": "Lightweight",
-    "weight": "135LBS",
-    "record": "1-0-0",
-    "kos": "1",
-    "boxrec": "https://boxrec.com/en/box-pro/1427606",
-    "image": "/assets/boxers/willjay-de-la-paz.png",
-    "featured": false,
-    "frame": ""
-  },
-  {
     "name": "Dylan Jael Feliciano",
     "alias": "",
     "is_champion": false,
@@ -218,6 +205,19 @@
     "boxrec": "https://boxrec.com/en/box-pro/983575",
     "image": "/assets/boxers/dylan-jael-feliciano-mr96j51y.png",
     "featured": true,
+    "frame": ""
+  },
+  {
+    "name": "Willjay De la Paz",
+    "alias": "",
+    "is_champion": false,
+    "division": "Lightweight",
+    "weight": "135LBS",
+    "record": "1-0-0",
+    "kos": "1",
+    "boxrec": "https://boxrec.com/en/box-pro/1427606",
+    "image": "/assets/boxers/willjay-de-la-paz.png",
+    "featured": false,
     "frame": ""
   },
   {
