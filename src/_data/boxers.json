@@ -234,19 +234,6 @@
     "frame": ""
   },
   {
-    "name": "Danielito Zorrilla",
-    "alias": "El Zorro",
-    "is_champion": false,
-    "division": "Jr. Welterweight",
-    "weight": "140LBS",
-    "record": "18-2-0",
-    "kos": "14",
-    "boxrec": "https://boxrec.com/en/box-pro/776463",
-    "image": "/assets/boxers/danielito-zorrilla.png",
-    "featured": false,
-    "frame": ""
-  },
-  {
     "name": "Dylan Jael Feliciano",
     "alias": "",
     "is_champion": false,
@@ -257,6 +244,19 @@
     "boxrec": "https://boxrec.com/en/box-pro/983575",
     "image": "/assets/boxers/dylan-jael-feliciano-mr96j51y.png",
     "featured": true,
+    "frame": ""
+  },
+  {
+    "name": "Danielito Zorrilla",
+    "alias": "El Zorro",
+    "is_champion": false,
+    "division": "Jr. Welterweight",
+    "weight": "140LBS",
+    "record": "18-2-0",
+    "kos": "14",
+    "boxrec": "https://boxrec.com/en/box-pro/776463",
+    "image": "/assets/boxers/danielito-zorrilla.png",
+    "featured": false,
     "frame": ""
   },
   {
