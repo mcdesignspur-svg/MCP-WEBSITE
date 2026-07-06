@@ -47,6 +47,11 @@ function slugify(text) {
     .trim();
 }
 
+// JSON.stringify produces valid YAML double-quoted scalars (handles inner quotes).
+function yamlScalar(value) {
+  return JSON.stringify(String(value ?? ""));
+}
+
 module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -74,16 +79,16 @@ module.exports = async function handler(req, res) {
   const markdown = `---
 layout: layouts/post.njk
 tags: ${tags}
-title: "${title.replace(/"/g, '\\"')}"
+title: ${yamlScalar(title)}
 date: ${postDate}
-author: "${author || "MCP Staff"}"
-image: "${image || ""}"
-image_focus: "${image_focus || "50% 50%"}"
-category: "${category || "Announcement"}"
+author: ${yamlScalar(author || "MCP Staff")}
+image: ${yamlScalar(image || "")}
+image_focus: ${yamlScalar(image_focus || "50% 50%")}
+category: ${yamlScalar(category || "Announcement")}
 featured: ${!!featured}
-excerpt: "${(excerpt || "").replace(/"/g, '\\"')}"
+excerpt: ${yamlScalar(excerpt || "")}
 gallery:
-${Array.isArray(gallery) && gallery.length ? gallery.map(p => `  - "${p}"`).join('\n') : '  []'}
+${Array.isArray(gallery) && gallery.length ? gallery.map(p => `  - ${yamlScalar(p)}`).join('\n') : '  []'}
 ---
 ${body}`;
 
