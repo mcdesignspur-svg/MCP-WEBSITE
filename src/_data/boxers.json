@@ -284,5 +284,18 @@
     "image": "/assets/boxers/yair-gallardo.png",
     "featured": true,
     "frame": ""
+  },
+  {
+    "name": "Dylan Jael Feliciano",
+    "alias": "",
+    "is_champion": false,
+    "division": "Super Featherweight",
+    "weight": "130lbs",
+    "record": "1-0-0",
+    "kos": "0",
+    "boxrec": "https://boxrec.com/en/box-pro/983575",
+    "image": "",
+    "featured": false,
+    "frame": ""
   }
 ]
