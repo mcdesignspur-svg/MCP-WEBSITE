@@ -273,19 +273,6 @@
     "frame": ""
   },
   {
-    "name": "Yair Gallardo",
-    "alias": "Manotas",
-    "is_champion": false,
-    "division": "Light Heavyweight",
-    "weight": "175LBS",
-    "record": "12-0-0",
-    "kos": "9",
-    "boxrec": "https://boxrec.com/en/box-pro/1119071",
-    "image": "/assets/boxers/yair-gallardo.png",
-    "featured": true,
-    "frame": ""
-  },
-  {
     "name": "Dylan Jael Feliciano",
     "alias": "",
     "is_champion": false,
@@ -295,6 +282,19 @@
     "kos": "0",
     "boxrec": "https://boxrec.com/en/box-pro/983575",
     "image": "/assets/boxers/dylan-jael-feliciano-mr96j51y.png",
+    "featured": true,
+    "frame": ""
+  },
+  {
+    "name": "Yair Gallardo",
+    "alias": "Manotas",
+    "is_champion": false,
+    "division": "Light Heavyweight",
+    "weight": "175LBS",
+    "record": "12-0-0",
+    "kos": "9",
+    "boxrec": "https://boxrec.com/en/box-pro/1119071",
+    "image": "/assets/boxers/yair-gallardo.png",
     "featured": true,
     "frame": ""
   }
